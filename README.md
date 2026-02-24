@@ -8,7 +8,7 @@ A clean, modern note-taking web app where anyone can sign up and manage their pe
 
 ## Screenshots
 
-> Add a screenshot of your app here
+![NoteVault Screenshot](./public/Screenshot.png)
 
 ---
 
