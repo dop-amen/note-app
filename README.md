@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NoteVault 🗒️
+
+A clean, modern note-taking web app where anyone can sign up and manage their personal notes.
+
+🔗 **Live Demo:** [note-app-tau-tawny.vercel.app](https://note-app-tau-tawny.vercel.app)
+
+---
+
+## Screenshots
+
+> Add a screenshot of your app here
+
+---
+
+## Features
+
+- 🔐 User authentication (sign up, login, logout)
+- 📝 Create, read, update and delete notes
+- 🔒 Each user can only see and edit their own notes
+- 🕒 Timestamps showing when a note was created and last edited
+- 📱 Fully responsive — works on mobile and desktop
+- ⚡ Deployed on Vercel for fast global access
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 15 | Frontend framework |
+| Tailwind CSS v4 | Styling |
+| Supabase | Database & Authentication |
+| Vercel | Hosting & Deployment |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to run the project locally:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/dop-amen/note-app.git
+cd note-app
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up environment variables
+
+Create a `.env.local` file in the root of the project and add:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Database Setup
 
-## Learn More
+This project uses Supabase. Create a `notes` table with the following columns:
 
-To learn more about Next.js, take a look at the following resources:
+| Column | Type |
+|--------|------|
+| id | uuid (primary key) |
+| user_id | uuid |
+| title | text |
+| content | text |
+| created_at | timestamptz |
+| updated_at | timestamptz |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Enable **Row Level Security (RLS)** and add policies so users can only access their own notes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open source and available under the [MIT License](LICENSE).
