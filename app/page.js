@@ -2,25 +2,118 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-950 via-green-950 to-gray-950 flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="absolute -top-25 -left-25 w-100 h-100 bg-green-500 rounded-full opacity-10 blur-3xl"></div>
-      <div className="absolute -bottom-25 -right-25 w-100 h-100 bg-green-700 rounded-full opacity-10 blur-3xl"></div>
+    <div className="neu-body" style={{ justifyContent: 'center', gap: '2rem' }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;800&display=swap');
 
-      <div className="z-10 text-center px-6">
-        <h1 className="text-6xl font-bold text-white mb-4">
-          Note<span className="text-green-400">Vault</span>
-        </h1>
-        <p className="text-gray-400 text-xl mb-10">Your thoughts, secured and organized.</p>
-        <div className="flex gap-4 justify-center">
-          
-          <Link href="/signup" className="border border-green-500 text-green-400 hover:bg-green-500 hover:text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200">
-            Sign Up
-          </Link>
-          <Link href="/login" className="bg-green-500/10 hover:bg-green-500/30 text-green-400 px-8 py-3 rounded-xl font-semibold transition-all duration-200">
-  Login
-</Link>
-        </div>
+        :root {
+          --bg: #1a2320;
+          --card-light: #1f2b27;
+          --card-dark: #141c19;
+          --shadow-light: rgba(45, 80, 65, 0.6);
+          --shadow-dark: rgba(8, 12, 10, 0.8);
+          --text: #8ab5a0;
+          --text-dim: #4a7060;
+          --green-accent: #4ade80;
+        }
+
+        .neu-body {
+          background: var(--bg);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .neu-title {
+          font-size: 4rem;
+          font-weight: 800;
+          color: var(--text);
+          letter-spacing: 1px;
+          line-height: 1;
+        }
+
+        .neu-title span {
+          color: var(--green-accent);
+        }
+
+        .neu-subtitle {
+          color: var(--text-dim);
+          font-size: 1.1rem;
+          margin-top: 1rem;
+          margin-bottom: 2.5rem;
+          text-align: center;
+        }
+
+        .neu-btn-primary {
+          border: none;
+          border-radius: 14px;
+          background: linear-gradient(145deg, var(--card-light), var(--card-dark));
+          box-shadow:
+            -5px -5px 15px 0px var(--shadow-light),
+            -3px -3px 4px 0px rgba(60,100,80,0.3),
+            5px 5px 15px 0px var(--shadow-dark),
+            3px 3px 4px 0px rgba(0,0,0,0.5);
+          color: var(--green-accent);
+          font-family: 'Nunito Sans', sans-serif;
+          font-weight: 800;
+          font-size: 1rem;
+          letter-spacing: 0.8px;
+          padding: 14px 36px;
+          cursor: pointer;
+          transition: box-shadow 0.15s, color 0.15s;
+          text-decoration: none;
+        }
+
+        .neu-btn-primary:hover {
+          color: #86efac;
+          box-shadow:
+            -3px -3px 10px 0px var(--shadow-light),
+            5px 5px 18px 0px var(--shadow-dark);
+        }
+
+        .neu-btn-primary:active {
+          box-shadow:
+            inset 3px 3px 7px rgba(8,12,10,0.8),
+            inset -3px -3px 7px rgba(45,80,65,0.5);
+          transform: scale(0.97);
+        }
+
+        .neu-btn-ghost {
+          border-radius: 14px;
+          background: linear-gradient(145deg, var(--card-light), var(--card-dark));
+          box-shadow:
+            inset 3px 3px 7px rgba(8,12,10,0.8),
+            inset -3px -3px 7px rgba(45,80,65,0.5);
+          color: var(--text-dim);
+          font-family: 'Nunito Sans', sans-serif;
+          font-weight: 800;
+          font-size: 1rem;
+          letter-spacing: 0.8px;
+          padding: 14px 36px;
+          cursor: pointer;
+          transition: color 0.2s;
+          text-decoration: none;
+        }
+
+        .neu-btn-ghost:hover {
+          color: var(--green-accent);
+        }
+
+        .neu-btn-ghost:active {
+          box-shadow:
+            -5px -5px 15px 0px var(--shadow-light),
+            5px 5px 15px 0px var(--shadow-dark);
+        }
+      `}</style>
+
+      <h1 className="neu-title">Note<span>Vault</span></h1>
+      <p className="neu-subtitle">Your thoughts, secured and organized.</p>
+
+      <div style={{ display: 'flex', gap: '1.5rem' }}>
+        <Link href="/signup" className="neu-btn-primary">Sign Up</Link>
+        <Link href="/login" className="neu-btn-ghost">Login</Link>
       </div>
     </div>
   )

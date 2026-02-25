@@ -41,33 +41,161 @@ export default function EditNote({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-green-950 to-gray-950 relative overflow-hidden">
-      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-green-500 rounded-full opacity-10 blur-3xl"></div>
-      <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] bg-green-700 rounded-full opacity-10 blur-3xl"></div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;800&display=swap');
 
-      <div className="relative z-10 max-w-2xl mx-auto px-6 py-10">
-        <button onClick={() => router.push('/dashboard')} className="text-gray-400 hover:text-white mb-8 flex items-center gap-2 transition-all">
-          ← Back to dashboard
-        </button>
-        <h1 className="text-4xl font-bold text-white mb-8">Edit <span className="text-green-400">Note</span></h1>
-        {error && <p className="text-red-400 mb-4 text-sm">{error}</p>}
-        <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 shadow-2xl">
-          <form onSubmit={handleUpdate} className="flex flex-col gap-4">
-            <input type="text" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)}
-              className="bg-white/10 border border-white/10 text-white placeholder-gray-500 p-3 rounded-xl focus:outline-none focus:border-green-500 transition-all text-xl" required />
-            <textarea placeholder="Write your note here..." value={content} onChange={e => setContent(e.target.value)}
-              className="bg-white/10 border border-white/10 text-white placeholder-gray-500 p-3 rounded-xl focus:outline-none focus:border-green-500 transition-all h-64 resize-none" required />
-            <div className="flex gap-4 mt-2">
-              <button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200">
-                Update Note
-              </button>
-              <button type="button" onClick={() => router.push('/dashboard')} className="border border-white/10 text-gray-400 hover:text-white px-8 py-3 rounded-xl transition-all duration-200">
-                Cancel
-              </button>
+        :root {
+          --bg: #1a2320;
+          --card-light: #1f2b27;
+          --card-dark: #141c19;
+          --shadow-light: rgba(45, 80, 65, 0.6);
+          --shadow-dark: rgba(8, 12, 10, 0.8);
+          --text: #8ab5a0;
+          --text-dim: #4a7060;
+          --text-dimmer: #2e4a3a;
+          --green-accent: #4ade80;
+        }
+
+        .neu-page {
+          background: var(--bg);
+          min-height: 100vh;
+          font-family: 'Nunito Sans', sans-serif;
+          color: var(--text);
+          padding: 2.5rem 1.5rem;
+        }
+
+        .neu-container { max-width: 680px; margin: 0 auto; }
+
+        .neu-back {
+          background: none; border: none;
+          color: var(--text);
+          font-family: 'Nunito Sans', sans-serif;
+          font-size: 0.9rem; cursor: pointer;
+          margin-bottom: 1.5rem;
+          display: flex; align-items: center; gap: 6px;
+          transition: color 0.2s; padding: 0;
+        }
+        .neu-back:hover { color: var(--text); }
+
+        .neu-page-title {
+          font-size: 2rem; font-weight: 800;
+          color: var(--text); margin-bottom: 1.5rem; letter-spacing: 0.3px;
+        }
+        .neu-page-title span { color: var(--green-accent); }
+
+        .neu-card {
+          border-radius: 24px;
+          background: linear-gradient(145deg, var(--card-light), var(--card-dark));
+          box-shadow:
+            -7px -7px 20px 0px var(--shadow-light),
+            -4px -4px 5px 0px rgba(60,100,80,0.3),
+            7px 7px 20px 0px var(--shadow-dark),
+            4px 4px 5px 0px rgba(0,0,0,0.5);
+          padding: 2rem;
+          display: flex; flex-direction: column; gap: 1.2rem;
+        }
+
+        .neu-input, .neu-textarea {
+          border: none; border-radius: 12px;
+          background: linear-gradient(145deg, var(--card-light), var(--card-dark));
+          outline: none;
+          font-family: 'Nunito Sans', sans-serif;
+          color: var(--text);
+          padding: 14px 20px; font-size: 0.95rem;
+          box-shadow:
+            inset 3px 3px 7px rgba(8,12,10,0.8),
+            inset -3px -3px 7px rgba(45,80,65,0.5);
+          transition: box-shadow 0.3s ease;
+          width: 100%; box-sizing: border-box;
+        }
+
+        .neu-input { font-size: 1.1rem; font-weight: 700; }
+        .neu-textarea { height: 220px; resize: none; line-height: 1.7; }
+        .neu-input::placeholder, .neu-textarea::placeholder { color: var(--text-dimmer); }
+
+        .neu-input:focus, .neu-textarea:focus {
+          box-shadow:
+            -4px -4px 10px 0px var(--shadow-light),
+            4px 4px 10px 0px var(--shadow-dark);
+        }
+
+        .neu-actions { display: flex; gap: 12px; margin-top: 4px; }
+
+        .neu-btn {
+          border: none; border-radius: 12px;
+          background: linear-gradient(145deg, var(--card-light), var(--card-dark));
+          box-shadow:
+            -4px -4px 10px 0px var(--shadow-light),
+            4px 4px 10px 0px var(--shadow-dark);
+          color: var(--green-accent);
+          font-family: 'Nunito Sans', sans-serif;
+          font-weight: 800; font-size: 0.95rem; letter-spacing: 0.5px;
+          padding: 12px 28px; cursor: pointer;
+          transition: box-shadow 0.15s, color 0.15s;
+        }
+        .neu-btn:hover {
+          color: #86efac;
+          box-shadow: -2px -2px 6px 0px var(--shadow-light), 4px 4px 12px 0px var(--shadow-dark);
+        }
+        .neu-btn:active {
+          box-shadow:
+            inset 3px 3px 7px rgba(8,12,10,0.8),
+            inset -3px -3px 7px rgba(45,80,65,0.5);
+          transform: scale(0.97);
+        }
+
+        .neu-btn-ghost {
+          border: none; border-radius: 12px;
+          background: linear-gradient(145deg, var(--card-light), var(--card-dark));
+          box-shadow:
+            inset 3px 3px 7px rgba(8,12,10,0.8),
+            inset -3px -3px 7px rgba(45,80,65,0.5);
+          color: var(--text-dim);
+          font-family: 'Nunito Sans', sans-serif;
+          font-weight: 800; font-size: 0.95rem;
+          padding: 12px 28px; cursor: pointer; transition: color 0.2s;
+        }
+        .neu-btn-ghost:hover { color: var(--text); }
+        .neu-btn-ghost:active {
+          box-shadow:
+            -4px -4px 10px 0px var(--shadow-light),
+            4px 4px 10px 0px var(--shadow-dark);
+        }
+
+        .neu-error { font-size: 0.78rem; color: #f87171; }
+      `}</style>
+
+      <div className="neu-page">
+        <div className="neu-container">
+          <button className="neu-back" onClick={() => router.push('/dashboard')}>
+            ← Back to dashboard
+          </button>
+          <h1 className="neu-page-title">Edit <span>Note</span></h1>
+          {error && <p className="neu-error" style={{ marginBottom: '1rem' }}>{error}</p>}
+          <form onSubmit={handleUpdate} className="neu-card">
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              className="neu-input"
+              required
+            />
+            <textarea
+              placeholder="Write your note here..."
+              value={content}
+              onChange={e => setContent(e.target.value)}
+              className="neu-textarea"
+              required
+            />
+            <div className="neu-actions">
+              <button type="submit" className="neu-btn">Update Note</button>
+              <button type="button" className="neu-btn-ghost" onClick={() => router.push('/dashboard')}>Cancel</button>
             </div>
           </form>
         </div>
       </div>
-    </div>
+    </>
   )
 }
